@@ -1,1 +1,0 @@
-# Projeto Fábrica de Software - Turma A

@@ -9,6 +9,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
+import br.univille.projfso2024a.entity.Cliente;
 import br.univille.projfso2024a.service.ClienteService;
 
 @SpringBootTest
@@ -24,6 +25,18 @@ public class ClienteServiceTests {
     void getAllClientesEmptyList(){
         var listaClientes = service.getAll();
         assertEquals(listaClientes.size(), 0);
+    }
+
+    @Test
+    void saveNweClienteFindAll(){
+        var newCliente = new Cliente();
+        newCliente.setNome("Zezinho");
+        newCliente.setEndereco("Rua lalal 100");
+        service.save(newCliente);
+
+        var listaClientes = service.getAll();
+        assertEquals(listaClientes.get(0).getNome(), "Zezinho");
+
     }
 
 }

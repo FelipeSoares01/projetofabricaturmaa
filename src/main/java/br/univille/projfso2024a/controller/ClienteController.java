@@ -22,7 +22,6 @@ public class ClienteController {
     public ModelAndView index(){
         var listaClientes = service.getAll();
         return new ModelAndView("cliente/index","listaClientes",listaClientes);
-
     }
 
     @GetMapping("/novo")
@@ -30,6 +29,7 @@ public class ClienteController {
         var cliente = new Cliente();
         return new ModelAndView("cliente/form","cliente",cliente);
     }
+
     @PostMapping
     public ModelAndView save(Cliente cliente){
         service.save(cliente);
@@ -37,9 +37,14 @@ public class ClienteController {
     }
 
     @GetMapping("/alterar/{id}")
-    public ModelAndView alterar(@PathVariable("id")long id){
+    public ModelAndView alterar(@PathVariable("id") long id){
         var cliente = service.getById(id);
-
         return new ModelAndView("cliente/form", "cliente",cliente);
+    }
+
+    @GetMapping("/delete/{id}")
+    public ModelAndView delete(@PathVariable("id") long id){
+        service.delete(id);
+        return new ModelAndView("redirect:/clientes");
     }
 }

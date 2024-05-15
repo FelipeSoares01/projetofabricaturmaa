@@ -1,32 +1,150 @@
-/cliente/index.html
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-    <head th:include="layout :: htmlhead"></head>
-    <body>
-        <nav th:replace="layout :: menu">(menu)</nav>
-        <h1>Clientes</h1>
-        
-        <a href="/clientes/novo" class="btn btn-primary">Novo</a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes</title>
+    <!-- Incluindo o CSS do Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Seus estilos CSS personalizados aqui */
+        body {
+            font-family: "Poppins-Regular";
+            font-size: 15px;
+            color: #666;
+            background-color: #6645eb;
+            margin: 0;
+        }
 
-        <table class="table">
-            <thead>
+        h1 {
+            color: #fff;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            background-color: #fff;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        td {
+            border-top: 1px solid #dee2e6;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+            border-color: #d39e00;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 10px;
+        }
+
+        .modal-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .modal-title {
+            color: #333;
+        }
+
+        .modal-body, .modal-footer {
+            padding: 20px;
+        }
+
+        .btn-secondary, .btn-secondary:hover {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .btn-primary, .btn-secondary {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Clientes</h1>
+    <a href="/clientes/novo" class="btn btn-primary">Novo</a>
+    <table class="table" id="tabclientes">
+        <thead>
+            <tr>
                 <th>Nome</th>
                 <th>Endereço</th>
                 <th>Data Nascimento</th>
                 <th></th>
-            </thead>
-            <tbody>
-                <tr th:each="umCliente : ${listaClientes}">
-                    <td th:text="${umCliente.nome}"></td>
-                    <td th:text="${umCliente.endereco}"></td>
-                    <td th:text="${umCliente.dataNascimento}"></td>
-                    <td><a th:href="@{'/clientes/alterar/' + ${umCliente.id}}"
-                        class="btn btn-warning">Alterar</a></td>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div th:include="layout :: footer">(footer)</div>
-    </body>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="umCliente : ${listaClientes}">
+                <td th:text="${umCliente.nome}"></td>
+                <td th:text="${umCliente.endereco}"></td>
+                <td th:text="${umCliente.dataNascimento}"></td>
+                <td>
+                    <a th:href="@{'/clientes/alterar/' + ${umCliente.id}}" class="btn btn-warning">Alterar</a>
+                    <button class="btn btn-danger js-delete" th:data-id="${umCliente.id}">Excluir</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="modal" tabindex="-1" id="modalExcluirCliente" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Excluir Cliente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Confirma a exclusão do cliente?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                    <button type="button" class="btn btn-primary" id="btnExcluirCliente">Sim</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script th:src="@{/script.js}"></script>
+</body>
 </html>

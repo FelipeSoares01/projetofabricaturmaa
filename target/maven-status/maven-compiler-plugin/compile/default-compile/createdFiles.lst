@@ -1,0 +1,8 @@
+br\univille\projfso2024a\service\ClienteService.class
+br\univille\projfso2024a\controller\HomeController.class
+br\univille\projfso2024a\service\impl\ClienteServiceImpl.class
+br\univille\projfso2024a\repository\ClienteRepository.class
+br\univille\projfso2024a\Startup.class
+br\univille\projfso2024a\Projfso2024aApplication.class
+br\univille\projfso2024a\entity\Cliente.class
+br\univille\projfso2024a\controller\ClienteController.class

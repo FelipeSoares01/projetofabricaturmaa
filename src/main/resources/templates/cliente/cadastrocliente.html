@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edição de Cliente</title>
+    <title>Cadastro Cliente</title>
     <!-- Incluindo o CSS do Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -97,35 +97,30 @@
     <div class="wrapper">
         <div class="image-holder"></div> <!-- Coluna vazia à esquerda -->
         <div class="form-holder">
-            <!-- Formulário para editar um cliente -->
-            <form th:action="@{/clientes}" method="post">
-                <h3>Edição de Cliente</h3>
-                <input type="hidden" id="id" name="id" th:value="${cliente.id}">
+            <form action="#">
+                <h3>Cadastro de Cliente</h3>
                 <div class="form-row">
                     <label for="nome">Nome</label>
-                    <input type="text" id="nome" name="nome" class="form-control" th:value="${cliente.nome}" required>
+                    <input type="text" id="nome" name="nome" class="form-control" required>
                 </div>
-          
+                <div class="form-row">
+                    <label for="sobrenome">Sobrenome</label>
+                    <input type="text" id="sobrenome" name="sobrenome" class="form-control" required>
+                </div>
                 <div class="form-row">
                     <label for="telefone">Telefone</label>
-                    <input type="text" id="telefone" name="telefone" class="form-control" th:value="${cliente.telefone}" required>
+                    <input type="text" id="telefone" name="telefone" class="form-control" required>
                 </div>
                 <div class="form-row">
                     <label for="email">Email</label>
-                    <input type="email" id="email" name="email" class="form-control" th:value="${cliente.email}" required>
-                </div>
-                <div class="form-row">
-                    <label for="dataNascimento">Data de Nascimento</label>
-                    <input type="date" id="dataNascimento" name="dataNascimento" class="form-control" th:value="${#dates.format(cliente.dataNascimento, 'yyyy-MM-dd')}" required>
+                    <input type="email" id="email" name="email" class="form-control" required>
                 </div>
                 <div class="form-row">
                     <label for="endereco">Endereço</label>
-                    <input type="text" id="endereco" name="endereco" class="form-control" th:value="${cliente.endereco}" required>
+                    <input type="text" id="endereco" name="endereco" class="form-control" required>
                 </div>
                 <div class="actions">
-                    <!-- Botão de envio do formulário -->
                     <button type="submit" class="btn btn-primary">Salvar</button>
-                    <!-- Botão de reset do formulário -->
                     <button type="reset" class="btn btn-secondary">Cancelar</button>
                 </div>
             </form>

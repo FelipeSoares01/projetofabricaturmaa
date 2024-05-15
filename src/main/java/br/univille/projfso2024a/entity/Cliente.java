@@ -26,7 +26,21 @@ public class Cliente {
     @Column(length = 1000)
     private String endereco;
     private String telefone;
+    private String email;
+    private String cidade;
 
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getCidade() {
+        return cidade;
+    }
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dataNascimento;

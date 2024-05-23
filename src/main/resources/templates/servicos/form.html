@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edição de Serviço</title>
+    <!-- Incluindo o CSS do Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Seus estilos CSS personalizados aqui */
+        .actions {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .actions button {
+            margin-left: 10px;
+        }
+
+        * {
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins-Regular";
+            font-size: 15px;
+            color: #666;
+            background-color: #6645eb;
+            margin: 0;
+        }
+
+        :focus {
+            outline: none;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        input,
+        textarea,
+        select,
+        button {
+            font-family: "Poppins-Regular";
+            font-size: 15px;
+            color: #666;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            vertical-align: middle;
+        }
+
+        .wrapper {
+            max-width: 600px;
+            height: 100vh;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centralizando os elementos horizontalmente */
+            background-color: #6645eb; /* Fundo azul */
+            padding: 20px; /* Espaçamento interno */
+        }
+
+        .wrapper .image-holder {
+            display: none; /* Esconder coluna vazia em dispositivos móveis */
+        }
+
+        .wrapper .form-holder {
+            width: 90%; /* Largura do formulário para dispositivos móveis */
+            background-color: #fff; /* Fundo branco do formulário */
+            padding: 30px; /* Espaçamento interno do formulário */
+        }
+
+        .form-holder h3 {
+            margin-top: 0; /* Removendo margem superior do título */
+        }
+
+        .form-row {
+            margin-bottom: 20px; /* Espaçamento entre as linhas do formulário */
+        }
+
+        .actions {
+            margin-top: 30px; /* Espaçamento entre o formulário e os botões */
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="image-holder"></div> <!-- Coluna vazia à esquerda -->
+        <div class="form-holder">
+            <!-- Formulário para editar um cliente -->
+            <form th:action="@{/servicos}" method="post">
+                <h3>Edição de Servico</h3>
+                <input type="hidden" id="id" name="id" th:value="${servico.id}">
+                <div class="form-row">
+                    <label for="corte">corte</label>
+                    <input type="text" id="corte" name="corte" class="form-control" th:value="${servico.corte}" required>
+                </div>
+          
+                <div class="form-row">
+                    <label for="barba">Barba</label>
+                    <input type="text" id="barba" name="barba" class="form-control" th:value="${servico.barba}" required>
+                </div>
+                <div class="form-row">
+                    <label for="cortebarba">Corte e Barba</label>
+                    <input type="cortebarba" id="cortebarba" name="cortebarba" class="form-control" th:value="${servico.cortebarba}" required>
+                </div>
+                <div class="form-row">
+                    <label for="pintura">Pintura</label>
+                    <input type="pintura" id="pintura" name="pintura" class="form-control" th:value="${servico.pintura}" required>
+                </div>
+              
+                <div class="actions">
+                    <!-- Botão de envio do formulário -->
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <!-- Botão de reset do formulário -->
+                    <button type="reset" class="btn btn-secondary">Cancelar</button>
+                </div>
+            </form>
+        </div>
+        <div class="image-holder"></div> <!-- Coluna vazia à direita -->
+    </div>
+    <!-- Incluindo o JS do Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Projfso2024aApplication<projfso2024a>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "br.univille.projfso2024a.Projfso2024aApplication",
+            "projectName": "projfso2024a",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

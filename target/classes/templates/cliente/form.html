@@ -122,6 +122,10 @@
                     <label for="endereco">Endereço</label>
                     <input type="text" id="endereco" name="endereco" class="form-control" th:value="${cliente.endereco}" required>
                 </div>
+                <div class="form-row">
+                    <label for="endereco">Senha</label>
+                    <input type="password" id="senha" name="senha" class="form-control" th:value="${cliente.senha}" required>
+                </div>
                 <div class="actions">
                     <!-- Botão de envio do formulário -->
                     <button type="submit" class="btn btn-primary">Salvar</button>

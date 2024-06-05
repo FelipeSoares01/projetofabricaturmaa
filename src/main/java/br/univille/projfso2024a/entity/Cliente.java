@@ -3,14 +3,15 @@ package br.univille.projfso2024a.entity;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotBlank;
@@ -27,8 +28,12 @@ public class Cliente {
     private String endereco;
     private String telefone;
     private String email;
-    private String cidade;
     private String senha;
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    private Cidade cidade;
+
+
 
     public String getSenha() {
         return senha;
@@ -42,10 +47,10 @@ public class Cliente {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getCidade() {
+    public Cidade getCidade() {
         return cidade;
     }
-    public void setCidade(String cidade) {
+    public void setCidade(Cidade cidade) {
         this.cidade = cidade;
     }
     @Temporal(TemporalType.DATE)

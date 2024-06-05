@@ -111,6 +111,7 @@
                 <th>Endereço</th>
                 <th>Data Nascimento</th>
                 <th>Senha</th>
+                <th>Cidade</th>
                 <th></th>
             </tr>
         </thead>
@@ -120,7 +121,9 @@
                 <td th:text="${umCliente.endereco}"></td>
                 <td th:text="${umCliente.dataNascimento}"></td>
                 <td th:text="${umCliente.senha}"></td>
-                <td>
+                <td th:text="${umCliente.cidade?.nome}"></td>
+                
+                          <td>
                     <a th:href="@{'/clientes/alterar/' + ${umCliente.id}}" class="btn btn-warning">Alterar</a>
                     <button class="btn btn-danger js-delete" th:data-id="${umCliente.id}">Excluir</button>
                 </td>

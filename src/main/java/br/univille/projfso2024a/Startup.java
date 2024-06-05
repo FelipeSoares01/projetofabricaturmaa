@@ -25,7 +25,7 @@ public class Startup {
         cliente1.setEndereco("Rua lalalaa 100");
         cliente1.setDataNascimento(new Date(2024,04,17));
         cliente1.setEmail("eita@hotmail.com");
-        cliente1.setCidade("Joinville");
+        //cliente1.setCidade("Joinville");
         cliente1.setSenha("admin");
         service.save(cliente1);
     }

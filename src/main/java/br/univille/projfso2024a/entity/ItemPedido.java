@@ -1,30 +1,40 @@
 package br.univille.projfso2024a.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Produto {
+public class ItemPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private String descricao;
+    private int quantidade;
     private float valor;
 
-    
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH})
+    private Produto produto;
+
+    public Produto getProduto() {
+        return produto;
+    }
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
     public long getId() {
         return id;
     }
     public void setId(long id) {
         this.id = id;
     }
-    public String getDescricao() {
-        return descricao;
+    public int getQuantidade() {
+        return quantidade;
     }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
     public float getValor() {
         return valor;
@@ -32,5 +42,5 @@ public class Produto {
     public void setValor(float valor) {
         this.valor = valor;
     }
-
+    
 }

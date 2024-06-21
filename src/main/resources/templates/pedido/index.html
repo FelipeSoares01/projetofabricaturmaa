@@ -191,7 +191,7 @@
         // Evento para confirmar a exclusão do serviço
         $("#btnExcluirPedido").on("click", function(){
             $.ajax({
-                url: "/pedido/delete/" + pedidoId,
+                url: "/pedidos/delete/" + pedidoId,
                 method: "DELETE", // Alterado para DELETE
                 success: function(){
                     window.location.href = "/pedidos";

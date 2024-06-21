@@ -1,243 +1,57 @@
 <!DOCTYPE html>
-<html lang="pt-BR" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Calendário Dinâmico em JavaScript</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+    <head th:include="layout :: htmlhead"></head>
     <style>
-      /* Import Google font - Poppins */
-      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
-      * {
-        margin: 0;
+      .fso-titulo {
+        background-color: cornflowerblue;
+        border: 1px solid black;
+        font-weight: bold;
+      }
+      .fso-dia {
+        background-color: whitesmoke;
+        border: 1px solid black;
+        min-width: 111px;
+        min-height: 64px;
+      }
+      ul {
+        list-style-type: none;
         padding: 0;
-        box-sizing: border-box;
-        font-family: 'Poppins', sans-serif;
-      }
-      body {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        background: #6645eb;
-        padding: 20px;
-      }
-      .wrapper {
-        width: 100%;
-        max-width: 450px;
-        background: #fff;
-        border-radius: 10px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-        padding: 20px;
-      }
-      .wrapper header {
-        display: flex;
-        align-items: center;
-        padding: 10px 0;
-        justify-content: space-between;
-      }
-      header .icons {
-        display: flex;
-      }
-      header .icons span {
-        height: 38px;
-        width: 38px;
-        margin: 0 1px;
-        cursor: pointer;
-        color: #878787;
-        text-align: center;
-        line-height: 38px;
-        font-size: 1.9rem;
-        user-select: none;
-        border-radius: 50%;
-      }
-      header .icons span:hover {
-        background: #f2f2f2;
-      }
-      header .current-date {
-        font-size: 1.45rem;
-        font-weight: 500;
-      }
-      .calendar {
-        padding: 20px;
-      }
-      .calendar ul {
-        display: flex;
-        flex-wrap: wrap;
-        list-style: none;
-        text-align: center;
-      }
-      .calendar .weeks li {
-        font-weight: 500;
-        cursor: default;
-        width: calc(100% / 7);
-        font-size: 1.07rem;
-        margin-bottom: 10px;
-      }
-      .calendar .days li {
-        z-index: 1;
-        cursor: pointer;
-        position: relative;
-        width: calc(100% / 7);
-        font-size: 1.07rem;
-        color: #333;
-        margin-top: 10px;
-      }
-      .days li.inactive {
-        color: #aaa;
-      }
-      .days li.active {
-        color: #fff;
-      }
-      .days li::before {
-        position: absolute;
-        content: "";
-        left: 50%;
-        top: 50%;
-        height: 40px;
-        width: 40px;
-        z-index: -1;
-        border-radius: 50%;
-        transform: translate(-50%, -50%);
-      }
-      .days li.active::before {
-        background: #9B59B6;
-      }
-      .days li:not(.active):hover::before {
-        background: #f2f2f2;
-      }
-      .time-selector {
-        margin-top: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      .time-selector label {
-        font-size: 1.2rem;
-        margin-bottom: 10px;
-      }
-      .time-selector select {
-        padding: 10px;
-        font-size: 1rem;
-        border-radius: 5px;
-        border: 1px solid #ccc;
+        
       }
     </style>
-    <script src="script.js" defer></script>
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <p class="current-date"></p>
-        <div class="icons">
-          <span id="prev" class="material-symbols-rounded">chevron_left</span>
-          <span id="next" class="material-symbols-rounded">chevron_right</span>
+    <body>
+        
+        <nav th:replace="layout :: menu">(menu)</nav>
+        <main class="container">
+        <h5 th:text="'AGENDA: ' + ${agenda.mes}+'/'+${agenda.ano}"></h5>
+        <a th:href="${'/agenda/'+(agenda.mes-1)+'/'+agenda.ano}">Anterior</a>
+        <a th:href="${'/agenda/'+(agenda.mes+1)+'/'+agenda.ano}">Próximo</a>
+        <div class="text-center">
+            <div class="row justify-content-center">
+              <div class="col fso-titulo">Segunda</div>
+              <div class="col fso-titulo">Terça</div>
+              <div class="col fso-titulo">Quarta</div>
+              <div class="col fso-titulo">Quinta</div>
+              <div class="col fso-titulo">Sexta</div>
+              <div class="col fso-titulo">Sábado</div>
+              <div class="col fso-titulo">Domingo</div>
+            </div>
+            <div class="row justify-content-center" th:each="semana : ${agenda.listaSemanas}">
+              <div class="col fso-dia" 
+                  th:each="dia : ${semana.listaDias}">
+                  <div th:if="${dia.dia != 0}">
+                    <span th:text="${dia.dia}"></span>
+
+                      <ul>
+                        <li th:each="agendamento : ${dia.listaAgendamentos}"
+                        th:if="${agendamento}"
+                        th:text="${agendamento.hora + '/' + agendamento.descricao}"></li>
+                      </ul>
+                  </div>
+              </div>
+            </div>
         </div>
-      </header>
-      <div class="calendar">
-        <ul class="weeks">
-          <li>Dom</li>
-          <li>Seg</li>
-          <li>Ter</li>
-          <li>Qua</li>
-          <li>Qui</li>
-          <li>Sex</li>
-          <li>Sáb</li>
-        </ul>
-        <ul class="days"></ul>
-      </div>
-      <div class="time-selector">
-        <label for="time">Selecione um horário:</label>
-        <select id="time">
-          <option value="" disabled selected>Selecione um horário</option>
-          <option value="09:00">09:00</option>
-          <option value="09:30">09:30</option>
-          <option value="10:00">10:00</option>
-          <option value="10:30">10:30</option>
-          <option value="11:00">11:00</option>
-          <option value="11:30">11:30</option>
-          <option value="14:00">14:00</option>
-          <option value="14:30">14:30</option>
-          <option value="15:00">15:00</option>
-          <option value="15:30">15:30</option>
-          <option value="16:00">16:00</option>
-          <option value="16:30">16:30</option>
-          <option value="17:00">17:00</option>
-          <option value="17:30">17:30</option>
-          <option value="18:00">18:00</option>
-          <option value="18:30">18:30</option>
-          <option value="19:00">19:00</option>
-          <option value="19:30">19:30</option>
-        </select>
-      </div>
-    </div>
-    <script>
-      const daysTag = document.querySelector(".days"),
-            currentDate = document.querySelector(".current-date"),
-            prevNextIcon = document.querySelectorAll(".icons span"),
-            timeSelector = document.querySelector(".time-selector"),
-            timeSelect = document.getElementById("time");
-      
-      // Obtendo nova data, ano atual e mês
-      let date = new Date(),
-          currYear = date.getFullYear(),
-          currMonth = date.getMonth(),
-          selectedDate = null;
-      
-      // Armazenando os nomes completos de todos os meses em um array
-      const months = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho",
-                    "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-      
-      const renderCalendar = () => {
-          let firstDayofMonth = new Date(currYear, currMonth, 1).getDay(), // Obtendo o primeiro dia do mês
-              lastDateofMonth = new Date(currYear, currMonth + 1, 0).getDate(), // Obtendo a última data do mês
-              lastDayofMonth = new Date(currYear, currMonth, lastDateofMonth).getDay(), // Obtendo o último dia do mês
-              lastDateofLastMonth = new Date(currYear, currMonth, 0).getDate(); // Obtendo a última data do mês anterior
-          let liTag = "";
-      
-          for (let i = firstDayofMonth; i > 0; i--) { // Criando li dos últimos dias do mês anterior
-              liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
-          }
-      
-          for (let i = 1; i <= lastDateofMonth; i++) { // Criando li de todos os dias do mês atual
-              // Adicionando a classe active ao li se o dia, mês e ano atual corresponderem
-              let isToday = i === date.getDate() && currMonth === new Date().getMonth() 
-                          && currYear === new Date().getFullYear() ? "active" : "";
-              liTag += `<li class="${isToday}">${i}</li>`;
-          }
-      
-          for (let i = lastDayofMonth; i < 6; i++) { // Criando li dos primeiros dias do próximo mês
-              liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`
-          }
-          currentDate.innerText = `${months[currMonth]} ${currYear}`; // Passando mês e ano atuais como texto de currentDate
-          daysTag.innerHTML = liTag;
-      
-          // Adicionando evento de clique para cada dia
-          const days = document.querySelectorAll(".days li:not(.inactive)");
-          days.forEach(day => {
-              day.addEventListener("click", () => {
-                  selectedDate = `${day.innerText} ${months[currMonth]} ${currYear}`;
-                  timeSelector.style.display = "flex";
-                  alert(`Data selecionada: ${selectedDate}`);
-              });
-          });
-      }
-      renderCalendar();
-      
-      prevNextIcon.forEach(icon => { // Obtendo ícones de prev e next
-          icon.addEventListener("click", () => { // Adicionando evento de clique em ambos os ícones
-              // Se o ícone clicado for o ícone anterior, decrementa o mês atual em 1, senão incrementa em 1
-              currMonth = icon.id === "prev" ? currMonth - 1 : currMonth + 1;
-      
-              if(currMonth < 0 || currMonth > 11) { // Se o mês atual for menor que 0 ou maior que 11
-                  // Criando uma nova data do ano e mês atuais e passando como valor de data
-                  date = new Date(currYear, currMonth, new Date().getDate());
-                  currYear = date.getFullYear(); // Atualizando o ano atual com o ano da nova data
-                  currMonth = date.getMonth(); // Atualizando o mês atual com o mês da nova data
-              }
-              renderCalendar(); // Chamando a função renderCalendar
-          });
-      });
-    </script>
+    </main>
+    <div th:include="layout :: footer">(footer)</div>
   </body>
 </html>

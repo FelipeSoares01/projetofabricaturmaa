@@ -37,5 +37,17 @@ public class PedidoServiceImpl
         repository.delete(pedido);
         return pedido;
     }
+
+    @Override
+    public void deleteById(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteById'");
+    }
+
+    @Override
+    public void deletePedido(Long id) {
+        repository.deleteById(id);
+
+    }
     
 }

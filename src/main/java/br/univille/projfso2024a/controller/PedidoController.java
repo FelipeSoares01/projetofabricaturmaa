@@ -80,7 +80,7 @@ public class PedidoController {
 
 
     
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deletePedido(@PathVariable Long id) {
         try {
             pedidoService.deletePedido(id); // Implemente o serviço para excluir o pedido pelo ID

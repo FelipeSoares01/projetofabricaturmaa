@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Agendamento</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Novo Agendamento</h2>
+        <form th:action="@{/agenda/salvar}" method="post" th:object="${agendamento}">
+            <div class="form-group">
+                <label for="data">Data:</label>
+                <input type="date" id="data" name="data" class="form-control" th:field="*{data}" required>
+            </div>
+            <div class="form-group">
+                <label for="hora">Hora:</label>
+                <input type="time" id="hora" name="hora" class="form-control" th:field="*{hora}" required>
+            </div>
+            <div class="form-group">
+                <label for="cliente">Cliente:</label>
+                <select id="cliente" name="cliente.id" class="form-control" required>
+                    <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nome}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="servico">Serviço:</label>
+                <select id="servico" name="servico.id" class="form-control" required>
+                    <option value="">Selecione o serviço</option>
+                    <option th:each="servico : ${servicos}" th:value="${servico.id}" th:text="${'Corte: ' + servico.corte}"></option>
+                    <option th:each="servico : ${servicos}" th:value="${servico.id}" th:text="${'Barba: ' + servico.barba}"></option>
+                    <option th:each="servico : ${servicos}" th:value="${servico.id}" th:text="${'Corte e Barba: ' + servico.cortebarba}"></option>
+                    <option th:each="servico : ${servicos}" th:value="${servico.id}" th:text="${'Pintura: ' + servico.pintura}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

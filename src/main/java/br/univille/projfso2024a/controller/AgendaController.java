@@ -1,20 +1,24 @@
 package br.univille.projfso2024a.controller;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import br.univille.projfso2024a.entity.Agendamento;
 import br.univille.projfso2024a.service.AgendamentoService;
+import br.univille.projfso2024a.service.ClienteService;
+import br.univille.projfso2024a.service.ServicoService;
 import br.univille.projfso2024a.viewmodel.Agenda;
 import br.univille.projfso2024a.viewmodel.Dia;
 import br.univille.projfso2024a.viewmodel.Semana;
@@ -25,54 +29,90 @@ public class AgendaController {
 
     @Autowired
     private AgendamentoService service;
-    @GetMapping({"","/","/{mes}/{ano}"})
-    public ModelAndView index(@PathVariable(name="mes",required = false) Integer mes,
-                                @PathVariable(name="ano",required = false) Integer ano) {
+    
+    @Autowired
+    private AgendamentoService agendamentoService;
 
-        HashMap<String,Object> dados = new HashMap<>();
+    @Autowired
+    private ClienteService clienteService;
+
+    @Autowired
+    private ServicoService servicoService;
+
+    @GetMapping({"","/","/{mes}/{ano}"})
+    public ModelAndView index(@PathVariable(name="mes", required=false) Integer mes,
+                              @PathVariable(name="ano", required=false) Integer ano) {
+        HashMap<String, Object> dados = new HashMap<>();
         
         var agenda = new Agenda();
-        if(mes == null || ano == null){
+        
+        if (mes == null || ano == null) {
             var today = LocalDate.now();
             mes = today.getMonthValue();
             ano = today.getYear();
         }
-        if(mes > 12){
+        
+        if (mes > 12) {
             mes = 1;
-            ano = ano + 1;
+            ano++;
         }
-        if(mes < 1){
+        if (mes < 1) {
             mes = 12;
-            ano = ano - 1;
+            ano--;
         }
+        
         agenda.setMes(mes);
         agenda.setAno(ano);
 
         var data = LocalDate.of(agenda.getAno(), agenda.getMes(), 1);
-        for(int semanacalend=1; semanacalend <= 6; semanacalend++){
+        
+        for (int semanacalend = 1; semanacalend <= 6; semanacalend++) {
             var semana = new Semana();
             agenda.getListaSemanas().add(semana);
-            for(int diacalend=1; diacalend <= 7; diacalend++){
+            for (int diacalend = 1; diacalend <= 7; diacalend++) {
                 var dia = new Dia();
                 semana.getListaDias().add(dia);
                 LocalDate dayValue = null;
-                var dayWeek = data.getDayOfWeek();
-                if(dayWeek.getValue() == diacalend){
+                var dayOfWeek = data.getDayOfWeek().getValue();
+                if (dayOfWeek == diacalend) {
                     dayValue = data;
-                    var agendamentos = service.getAllByDate(new Date(dayValue.getYear()-1900, dayValue.getMonth().ordinal(), dayValue.getDayOfMonth()));
-                    if(agendamentos.size() != 0)
+                    var agendamentos = service.getAllByDate(java.sql.Date.valueOf(dayValue));
+                    if (!agendamentos.isEmpty())
                         dia.getListaAgendamentos().addAll(agendamentos);
                     data = data.plusDays(1);
                     dia.setDia(dayValue.getDayOfMonth());
-                    dia.setMes(dayValue.getMonth().ordinal());
-                    dia.setAno(dayValue.getYear()-1900);
+                    dia.setMes(dayValue.getMonthValue() - 1);
+                    dia.setAno(dayValue.getYear());
                 }
-                
             }
         }
+        
         dados.put("agenda", agenda);
-
-        return new ModelAndView("agenda/index",dados);
+        return new ModelAndView("agenda/index", dados);
     }
-    
+
+    @GetMapping("/novo")
+    public ModelAndView novoAgendamento() {
+        var agendamento = new Agendamento();
+        var clientes = clienteService.getAll();
+        var servicos = servicoService.getAll();
+        ModelAndView mv = new ModelAndView("agenda/form");
+        mv.addObject("agendamento", agendamento);
+        mv.addObject("clientes", clientes);
+        mv.addObject("servicos", servicos);
+        return mv;
+    }
+
+    @PostMapping("/salvar")
+    public ModelAndView salvarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento, BindingResult result) {
+            var clientes = clienteService.getAll();
+            var servicos = servicoService.getAll();
+            ModelAndView mv = new ModelAndView("agenda/form");
+            mv.addObject("clientes", clientes);
+            mv.addObject("servicos", servicos);
+            agendamentoService.save(agendamento);
+        return new ModelAndView("redirect:/agenda");
+    }
+
+
 }

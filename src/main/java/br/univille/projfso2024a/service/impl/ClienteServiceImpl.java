@@ -10,8 +10,7 @@ import br.univille.projfso2024a.repository.ClienteRepository;
 import br.univille.projfso2024a.service.ClienteService;
 
 @Service
-public class ClienteServiceImpl 
-    implements ClienteService {
+public class ClienteServiceImpl implements ClienteService {
     
     @Autowired
     private ClienteRepository repository;
@@ -23,17 +22,25 @@ public class ClienteServiceImpl
 
     @Override
     public Cliente getById(long id) {
-        return repository.getById(id);
+        return repository.findById(id).orElse(null);
     }
 
     @Override
     public List<Cliente> getAll() {
         return repository.findAll();
     }
+
     @Override
     public Cliente delete(long id) {
         var cliente = getById(id);
-        repository.deleteById(id);
+        if (cliente != null) {
+            repository.deleteById(id);
+        }
         return cliente;
+    }
+
+    @Override
+    public List<Cliente> findAll() {
+        return repository.findAll();
     }
 }

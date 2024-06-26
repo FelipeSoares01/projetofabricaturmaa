@@ -2,6 +2,7 @@ package br.univille.projfso2024a.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,18 @@ public class AgendamentoServiceImpl
     @Override
     public List<Agendamento> getAllByDate(Date data) {
         return repository.findAllByData(data);
+    }
+
+    @Override
+    public void delete(long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+    }
+
+    @Override
+    public Optional<Agendamento> getById(long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getById'");
     }
     
 }

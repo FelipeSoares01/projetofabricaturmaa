@@ -8,4 +8,5 @@ public interface ClienteService {
     Cliente getById(long id);
     List<Cliente> getAll();
     Cliente delete(long id);
+    List<Cliente> findAll(); // Novo método adicionado
 }

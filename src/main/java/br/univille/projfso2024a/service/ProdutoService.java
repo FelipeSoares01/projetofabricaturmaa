@@ -10,4 +10,8 @@ public interface ProdutoService {
     Produto getById(long id);
     List<Produto> getAll();
     void delete(long id);
+    static void deleteProduto(Long id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteProduto'");
+    }
 }

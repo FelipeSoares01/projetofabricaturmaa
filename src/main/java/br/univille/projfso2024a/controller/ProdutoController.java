@@ -1,7 +1,10 @@
 package br.univille.projfso2024a.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,9 +45,13 @@ public class ProdutoController {
         return new ModelAndView("produtos/form", "produto", produto);
     }
 
-    @GetMapping("/delete/{id}")
-    public ModelAndView delete(@PathVariable("id") long id){
-        service.delete(id);
-        return new ModelAndView("redirect:/produtos");
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteProduto(@PathVariable Long id) {
+        try {
+            service.delete(id); // Chame o método delete da instância de ProdutoService
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

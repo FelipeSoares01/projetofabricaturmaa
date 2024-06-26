@@ -10,6 +10,7 @@ public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String nome;
     private String descricao;
     private float valor;
 
@@ -31,6 +32,12 @@ public class Produto {
     }
     public void setValor(float valor) {
         this.valor = valor;
+    }
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
 }

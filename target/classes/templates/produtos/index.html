@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+    <!-- Incluindo o CSS do Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Seus estilos CSS personalizados aqui */
+        body {
+            font-family: "Poppins-Regular";
+            font-size: 15px;
+            color: #666;
+            background-color: #6645eb;
+            margin: 0;
+        }
+
+        h1 {
+            color: #fff;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            background-color: #fff;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+        }
+
+        td {
+            border-top: 1px solid #dee2e6;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+            border-color: #d39e00;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 10px;
+        }
+
+        .modal-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .modal-title {
+            color: #333;
+        }
+
+        .modal-body, .modal-footer {
+            padding: 20px;
+        }
+
+        .btn-secondary, .btn-secondary:hover {
+            background-color: #6c757d;
+            border-color: #6c757d;
+        }
+
+        .btn-primary, .btn-secondary {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Produto</h1>
+        <a href="/produtos/novo" class="btn btn-primary mb-3">Novo Produto</a>
+        <table class="table" id="tabproduto">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="umProduto : ${listaproduto}">
+                    <td th:text="${umProduto.nome}"></td>
+                    <td th:text="${umProduto.descricao}"></td>
+                    <td th:text="${umProduto.valor}"></td>
+                    <td>
+                        <a th:href="@{'/produtos/alterar/' + ${umProduto.id}}" class="btn btn-warning">Alterar</a>
+                        <button class="btn btn-danger js-delete" th:data-id="${umProduto.id}">Excluir</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal" tabindex="-1" id="modalExcluirProduto" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Excluir Produto</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Confirma a exclusão do produto?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                    <button type="button" class="btn btn-primary" id="btnExcluirProduto">Sim</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            let produtoId;
+
+            // Evento para abrir o modal e guardar o ID do produto
+            $(".js-delete").on("click", function(){
+                produtoId = $(this).attr("data-id");
+                $('#modalExcluirProduto').modal('show');
+            });
+
+            // Evento para confirmar a exclusão do produto
+            $("#btnExcluirProduto").on("click", function(){
+                $.ajax({
+                    url: "/produtos/delete/" + produtoId,
+                    method: "DELETE",
+                    success: function(){
+                        window.location.href = "/produtos";
+                    },
+                    error: function(){
+                        alert("Erro ao excluir o produto.");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

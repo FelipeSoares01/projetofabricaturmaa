@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edição de Cliente</title>
+    <title>Edição de Produto</title>
     <!-- Incluindo o CSS do Bootstrap -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -97,30 +97,24 @@
     <div class="wrapper">
         <div class="image-holder"></div> <!-- Coluna vazia à esquerda -->
         <div class="form-holder">
-            <!-- Formulário para editar um cliente -->
-            <form th:action="@{/clientes}" method="post">
+            <!-- Formulário para editar um produto -->
+            <form th:action="@{/produtos}" method="post">
                 <h3>Edição de Produto</h3>
-                
-                <input type="hidden" id="id" name="id" th:value="${cliente.id}">
+                <input type="hidden" id="id" name="id" th:value="${produto.id}">
                 <div class="form-row">
-                    <label for="nome">Produto</label>
+                    <label for="nome">Nome</label>
                     <input type="text" id="nome" name="nome" class="form-control" th:value="${produto.nome}" required>
                 </div>
           
                 <div class="form-row">
-                    <label for="modelo">Modelo</label>
-                    <input type="text" id="modelo" name="modelo" class="form-control" th:value="${produto.modelo}" required>
-                </div>
-                <div class="form-row">
                     <label for="descricao">Descrição</label>
-                    <input type="descricao" id="descricao" name="descricao" class="form-control" th:value="${produto.descricao}" required>
+                    <input type="text" id="descricao" name="descricao" class="form-control" th:value="${produto.descricao}" required>
                 </div>
                 <div class="form-row">
                     <label for="valor">Valor</label>
-                    <input type="valor" id="valor" name="valor" class="form-control" th:value="${produto.valor}" required>
+                    <input type="text" id="valor" name="valor" class="form-control" th:value="${produto.valor}" required>
                 </div>
-     
-           
+        
                 <div class="actions">
                     <!-- Botão de envio do formulário -->
                     <button type="submit" class="btn btn-primary">Salvar</button>

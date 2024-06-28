@@ -31,6 +31,7 @@
         <a th:href="${'/agenda/'+(agenda.mes-1)+'/'+agenda.ano}">Anterior</a>
         <a th:href="${'/agenda/'+(agenda.mes+1)+'/'+agenda.ano}">Próximo</a>
         
+
         <!-- Botão para Novo Agendamento -->
         <a th:href="@{/agenda/novo}" class="btn btn-primary ml-3">Novo Agendamento</a>
         
@@ -53,7 +54,7 @@
                       <ul>
                         <li th:each="agendamento : ${dia.listaAgendamentos}"
                         th:if="${agendamento}"
-                        th:text="${agendamento.hora + '/' + agendamento.descricao}"></li>
+                        th:text="${agendamento.hora + '/' + agendamento.cliente?.nome}"></li>
                       </ul>
                   </div>
               </div>

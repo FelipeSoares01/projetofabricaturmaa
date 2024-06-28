@@ -12,21 +12,21 @@
         <form th:action="@{/agenda/salvar}" method="post" th:object="${agendamento}">
             <div class="form-group">
                 <label for="data">Data:</label>
-                <input type="date" id="data" name="data" class="form-control" th:field="*{data}" required>
+                <input type="date" id="data" class="form-control" th:field="*{data}" required>
             </div>
             <div class="form-group">
                 <label for="hora">Hora:</label>
-                <input type="time" id="hora" name="hora" class="form-control" th:field="*{hora}" required>
+                <input type="time" id="hora" class="form-control" th:field="*{hora}" required>
             </div>
             <div class="form-group">
                 <label for="cliente">Cliente:</label>
-                <select id="cliente" name="cliente.id" class="form-control" required>
+                <select id="cliente" th:field="*{cliente}" class="form-control" required>
                     <option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nome}"></option>
                 </select>
             </div>
             <div class="form-group">
                 <label for="servico">Serviço:</label>
-                <select id="servico" name="servico.id" class="form-control" required>
+                <select id="servico" th:field="*{servico}" class="form-control" required>
                     <option value="">Selecione o serviço</option>
                     <option th:each="servico : ${servicos}" th:value="${servico.id}" th:text="${'Corte: ' + servico.corte}"></option>
                     <option th:each="servico : ${servicos}" th:value="${servico.id}" th:text="${'Barba: ' + servico.barba}"></option>

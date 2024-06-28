@@ -21,7 +21,9 @@ public class ProdutoController {
     @Autowired
     private ProdutoService service;
 
-    @GetMapping
+    
+
+    @GetMapping({"","/"})
     public ModelAndView index(){
         var listaProduto = service.getAll();
         return new ModelAndView("produtos/index", "listaproduto", listaProduto);

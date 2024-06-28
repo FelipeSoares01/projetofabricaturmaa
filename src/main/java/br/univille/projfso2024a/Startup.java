@@ -32,26 +32,26 @@ public class Startup {
         cliente1.setDataNascimento(new Date(2024,04,17));
         clienteService.save(cliente1);
 
-        var prod1 = new Produto();
-        prod1.setDescricao("Nintendo Switch");
-        prod1.setValor(2000f);
-        produtoService.save(prod1);
+      //  var prod1 = new Produto();
+    //    prod1.setDescricao("Nintendo Switch");
+    //    prod1.setValor(2000f);
+    //    produtoService.save(prod1);
 
-        var prod2 = new Produto();
-        prod2.setDescricao("XBOX Series X");
-        prod2.setValor(4500f);
-        produtoService.save(prod2);
+   ///     var prod2 = new Produto();
+   //     prod2.setDescricao("XBOX Series X");
+   //     prod2.setValor(4500f);
+   //     produtoService.save(prod2);
 
-        var agendamento = new Agendamento();
-        agendamento.setData(new Date());
-        agendamento.setHora(new Date());
-        agendamento.setDescricao("Zezinho");
-        agendamentoService.save(agendamento);
+        // var agendamento = new Agendamento();
+        // agendamento.setData(new Date());
+        // agendamento.setHora(new Date());
+        // agendamento.setDescricao("Zezinho");
+        // agendamentoService.save(agendamento);
         
-        agendamento = new Agendamento();
-        agendamento.setData(new Date());
-        agendamento.setHora(new Date());
-        agendamento.setDescricao("Mariazinha");
-        agendamentoService.save(agendamento);
+        // agendamento = new Agendamento();
+        // agendamento.setData(new Date());
+        // agendamento.setHora(new Date());
+        // agendamento.setDescricao("Mariazinha");
+        // agendamentoService.save(agendamento);
     }
 }

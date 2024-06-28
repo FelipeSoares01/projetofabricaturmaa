@@ -4,10 +4,12 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
@@ -20,9 +22,26 @@ public class Agendamento {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date data;
 
+    @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.MERGE})
+    private Cliente cliente;
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+    @ManyToOne(cascade = {CascadeType.REFRESH,CascadeType.MERGE})
+    private Servico servico;
+
+    public Servico getServico() {
+        return servico;
+    }
+    public void setServico(Servico servico) {
+        this.servico = servico;
+    }
     @Temporal(TemporalType.TIME)
-    @DateTimeFormat(pattern = "hh:mm")
+    @DateTimeFormat(pattern = "HH:mm")
     private Date hora;
     
     public Date getHora() {

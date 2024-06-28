@@ -104,7 +104,8 @@ public class AgendaController {
     }
 
     @PostMapping("/salvar")
-    public ModelAndView salvarAgendamento(@ModelAttribute("agendamento") Agendamento agendamento, BindingResult result) {
+    //@ModelAttribute("agendamento")
+    public ModelAndView salvarAgendamento(Agendamento agendamento, BindingResult result) {
             var clientes = clienteService.getAll();
             var servicos = servicoService.getAll();
             ModelAndView mv = new ModelAndView("agenda/form");

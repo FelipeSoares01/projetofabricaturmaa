@@ -20,29 +20,28 @@ public class ProdutoController {
 
     @Autowired
     private ProdutoService service;
-
     
 
-    @GetMapping({"","/"})
-    public ModelAndView index(){
+    @GetMapping({"", "/"})
+    public ModelAndView index() {
         var listaProduto = service.getAll();
         return new ModelAndView("produtos/index", "listaproduto", listaProduto);
     }
 
     @GetMapping("/novo")
-    public ModelAndView novo(){
+    public ModelAndView novo() {
         var produto = new Produto();
         return new ModelAndView("produtos/form", "produto", produto);
     }
 
     @PostMapping
-    public ModelAndView save(Produto produto){
+    public ModelAndView save(Produto produto) {
         service.save(produto);
         return new ModelAndView("redirect:/produtos");
     }
 
     @GetMapping("/alterar/{id}")
-    public ModelAndView alterar(@PathVariable("id") long id){
+    public ModelAndView alterar(@PathVariable("id") long id) {
         var produto = service.getById(id);
         return new ModelAndView("produtos/form", "produto", produto);
     }
@@ -50,10 +49,10 @@ public class ProdutoController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduto(@PathVariable Long id) {
         try {
-            service.delete(id); // Chame o método delete da instância de ProdutoService
+            service.delete(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao excluir o produto.");
         }
     }
 }

@@ -97,12 +97,12 @@
     <div class="wrapper">
         <div class="image-holder"></div> <!-- Coluna vazia à esquerda -->
         <div class="form-holder">
-            <!-- Formulário para editar um cliente -->
+            <!-- Formulário para editar um serviço -->
             <form th:action="@{/servicos}" method="post">
-                <h3>Edição de Servico</h3>
+                <h3>Edição de Serviço</h3>
                 <input type="hidden" id="id" name="id" th:value="${servico.id}">
                 <div class="form-row">
-                    <label for="corte">corte</label>
+                    <label for="corte">Corte</label>
                     <input type="text" id="corte" name="corte" class="form-control" th:value="${servico.corte}" required>
                 </div>
           
@@ -112,11 +112,11 @@
                 </div>
                 <div class="form-row">
                     <label for="cortebarba">Corte e Barba</label>
-                    <input type="cortebarba" id="cortebarba" name="cortebarba" class="form-control" th:value="${servico.cortebarba}" required>
+                    <input type="text" id="cortebarba" name="cortebarba" class="form-control" th:value="${servico.cortebarba}" required>
                 </div>
                 <div class="form-row">
                     <label for="pintura">Pintura</label>
-                    <input type="pintura" id="pintura" name="pintura" class="form-control" th:value="${servico.pintura}" required>
+                    <input type="text" id="pintura" name="pintura" class="form-control" th:value="${servico.pintura}" required>
                 </div>
               
                 <div class="actions">
